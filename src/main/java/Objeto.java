@@ -44,7 +44,7 @@ public class Objeto extends JLabel implements MouseListener, MouseMotionListener
 
             if (siObjetoSobreCaja){
 
-                setLocation(100000, 100000);
+                setVisible(false);
             /*Debido a que cada clase tiene su propio local counter que inicia en 0 si se rebasa dicha cantidad por
             el tiempo que pase el mouse sobre el objeto solo se va a poder sumar 1 por cada componente en pantalla*/
                 if (localCounter < 1){
@@ -60,7 +60,7 @@ public class Objeto extends JLabel implements MouseListener, MouseMotionListener
 
             if (siObjetoSobreCaja && valor == caja.objetosEnCaja + 1){
 
-                setLocation(100000, 100000);
+                setVisible(false);
             /*Debido a que cada clase tiene su propio local counter que inicia en 0 si se rebasa dicha cantidad por
             el tiempo que pase el mouse sobre el objeto solo se va a poder sumar 1 por cada componente en pantalla*/
                 if (localCounter < 1){
@@ -97,15 +97,18 @@ public class Objeto extends JLabel implements MouseListener, MouseMotionListener
     @Override
     public void mouseDragged(MouseEvent event) {
 
-        if (mousePresionado){
+       if (event.getComponent().isVisible()){
 
-            int deltaX = event.getXOnScreen() - getLocationOnScreen().x - ANCHOL / 2; // Cambio relativo en X
-            int deltaY = event.getYOnScreen() - getLocationOnScreen().y - ALTOL / 2; // Cambio relativo en Y
-            setLocation(getX() + deltaX, getY() + deltaY); // Actualizar la posición del componente
+            if (mousePresionado){
+
+                int deltaX = event.getXOnScreen() - getLocationOnScreen().x - ANCHOL / 2; // Cambio relativo en X
+                int deltaY = event.getYOnScreen() - getLocationOnScreen().y - ALTOL / 2; // Cambio relativo en Y
+                setLocation(getX() + deltaX, getY() + deltaY); // Actualizar la posición del componente
+            }
+
+            // Verificar si el objeto está dentro de la Caja
+            objetoEnCaja(getBounds().intersects(caja.getBounds()));
         }
-
-        // Verificar si el objeto está dentro de la Caja
-        objetoEnCaja(getBounds().intersects(caja.getBounds()));
 
     }
 
