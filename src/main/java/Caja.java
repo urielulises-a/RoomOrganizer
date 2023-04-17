@@ -8,13 +8,13 @@ public final class Caja extends JLabel implements MouseListener{
     final static int ANCHOC = 200;
     final static int ALTOC = 200;
     static int cajas;
-    int posX;
-    int grupo;
-    int puntaje ;
-    int objetosEnCaja;
-    int counter;
-    boolean mousePresionado;
-    boolean siMouseEnCaja;
+    public int posX;
+    public int grupo;
+    public int puntaje ;
+    public int objetosEnCaja;
+    private int counter;
+    private boolean mousePresionado;
+    public boolean siMouseEnCaja;
     public Caja(int grupo, int counter) {
 
         puntaje = 0;

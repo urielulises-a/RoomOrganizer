@@ -21,12 +21,15 @@ public final class Ventana extends JPanel {
     Caja[] cajas;
     Crono crono;
     int puntajeFinalPartida;
+    boolean dificultad;
     boolean tiempoTerminado;
     BufferedImage backGround;
 
-    public Ventana(){
+    public Ventana() {
 
         setPreferredSize(new Dimension(ANCHO, ALTO));
+
+        mostrarVentanaEmergenteDificultad();
 
         tiempoTerminado = false;
 
@@ -58,10 +61,15 @@ public final class Ventana extends JPanel {
         for (int i = 0; i < limitePersonajes; i++) {
 
             personajes[i] = new Personajes(cajas[0]);
+            personajes[i].setDificultad(dificultad);
             enemigos[i] = new Enemigos(cajas[1]);
+            enemigos[i].setDificultad(dificultad);
             jefes[i] = new Jefes(cajas[2]);
+            jefes[i].setDificultad(dificultad);
             items[i] = new Items(cajas[3]);
+            items[i].setDificultad(dificultad);
             amigos[i] = new Amigos(cajas[4]);
+            amigos[i].setDificultad(dificultad);
 
             add(enemigos[i]);
             add(personajes[i]);
@@ -75,16 +83,22 @@ public final class Ventana extends JPanel {
             for (int j = 0; j < limiteCajas; j++) {
 
                 personajes[i].objetoEnCaja(cajas[j].siMouseEnCaja);
+                personajes[i].setValor(i + 1);
                 enemigos[i].objetoEnCaja(cajas[j].siMouseEnCaja);
+                enemigos[i].setValor(i + 1);
                 jefes[i].objetoEnCaja(cajas[j].siMouseEnCaja);
+                jefes[i].setValor(i + 1);
                 items[i].objetoEnCaja(cajas[j].siMouseEnCaja);
+                items[i].setValor(i + 1);
                 amigos[i].objetoEnCaja(cajas[j].siMouseEnCaja);
+                amigos[i].setValor(i + 1);
             }
 
         }
 
         setLayout(null);
     }
+
     public void paintComponent(Graphics graphics){
 
         graphics.drawImage(backGround,  0, 0, ANCHO, ALTO, null);
@@ -107,6 +121,12 @@ public final class Ventana extends JPanel {
             tiempoTerminado = true;
             mostrarVentanaEmergente();
         }
+
+    }
+    public void mostrarVentanaEmergenteDificultad(){
+
+        int opcion = JOptionPane.showOptionDialog(this, "Desea continuar en modo difícil", "Dificultad", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+        dificultad = opcion == JOptionPane.YES_OPTION; //es lo mismo que un if (yes) true else false
 
     }
     public void mostrarVentanaEmergente() {

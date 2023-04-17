@@ -3,8 +3,9 @@ import java.awt.*;
 
 public final class Enemigos extends Objeto{
 
-    static int subCategoria = 3;
+    static int subCategoria;
     public Enemigos(Caja caja) {
+
         super();
         setCaja(caja);
         grupo+= 2;
@@ -16,5 +17,14 @@ public final class Enemigos extends Objeto{
         addMouseListener(this);
         addMouseMotionListener(this);
 
+    }
+    @Override
+    public void paintComponent(Graphics graphics){
+
+        if (dificultad) {
+            super.paintComponent(graphics);
+            graphics.setColor(Color.white);
+            graphics.drawString(String.valueOf(valor), 55, getHeight() - 20);
+        }
     }
 }

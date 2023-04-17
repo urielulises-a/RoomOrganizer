@@ -3,9 +3,9 @@ import java.awt.*;
 
 public final class Items extends Objeto{
 
-    static int subCategoria = 9;
-
+    static int subCategoria;
     public Items(Caja caja) {
+
         super();
         setCaja(caja);
         grupo+= 4;
@@ -17,5 +17,15 @@ public final class Items extends Objeto{
         addMouseListener(this);
         addMouseMotionListener(this);
 
+    }
+    @Override
+    public void paintComponent(Graphics graphics){
+        super.paintComponent(graphics);
+
+        if (dificultad) {
+
+            graphics.setColor(Color.white);
+            graphics.drawString(String.valueOf(valor), 55, getHeight() - 20);
+        }
     }
 }

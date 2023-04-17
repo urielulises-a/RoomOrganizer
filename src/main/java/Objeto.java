@@ -7,11 +7,13 @@ public class Objeto extends JLabel implements MouseListener, MouseMotionListener
 
     final static int ANCHOL = 100;
     final static int ALTOL = 100;
-    int posX, posY;
-    int grupo;
+    protected int posX, posY;
+    protected int grupo;
     private Caja caja;
-    boolean mousePresionado;
-    int localCounter;
+    protected boolean dificultad;
+    protected int valor;
+    private boolean mousePresionado;
+    protected int localCounter;
 
     public Objeto() {
 
@@ -25,15 +27,55 @@ public class Objeto extends JLabel implements MouseListener, MouseMotionListener
 
     }
 
+    public void setDificultad(boolean dificultad) {
+        this.dificultad = dificultad;
+    }
+
+    public void setValor(int valor) {
+        this.valor = valor;
+    }
+
     public void setCaja(Caja caja) {
         this.caja = caja;
     }
     public void objetoEnCaja(boolean siObjetoSobreCaja){
 
-        if (siObjetoSobreCaja){
+        if (!dificultad){
 
-            setLocation(100000, 100000);
+            if (siObjetoSobreCaja){
+
+                setLocation(100000, 100000);
+            /*Debido a que cada clase tiene su propio local counter que inicia en 0 si se rebasa dicha cantidad por
+            el tiempo que pase el mouse sobre el objeto solo se va a poder sumar 1 por cada componente en pantalla*/
+                if (localCounter < 1){
+
+                    caja.objetosEnCaja++;
+                    caja.puntaje+= (Math.random() * 500);
+                }
+
+                localCounter++;
+            }
         }
+        else {
+
+            if (siObjetoSobreCaja && valor == caja.objetosEnCaja + 1){
+
+                setLocation(100000, 100000);
+            /*Debido a que cada clase tiene su propio local counter que inicia en 0 si se rebasa dicha cantidad por
+            el tiempo que pase el mouse sobre el objeto solo se va a poder sumar 1 por cada componente en pantalla*/
+                if (localCounter < 1){
+
+                    caja.objetosEnCaja++;
+                    caja.puntaje+= (Math.random() * 500);
+                }
+
+                localCounter++;
+
+            }
+
+
+        }
+
     }
     public void reset() {
         posX = (int) (Math.random() * 1200);
@@ -61,26 +103,9 @@ public class Objeto extends JLabel implements MouseListener, MouseMotionListener
             int deltaY = event.getYOnScreen() - getLocationOnScreen().y - ALTOL / 2; // Cambio relativo en Y
             setLocation(getX() + deltaX, getY() + deltaY); // Actualizar la posición del componente
         }
+
         // Verificar si el objeto está dentro de la Caja
-        if (getBounds().intersects(caja.getBounds())){
-
-            objetoEnCaja(true);
-
-            /*Debido a que cada clase tiene su propio local counter que inicia en 0 si se rebasa dicha cantidad por
-            el tiempo que pase el mouse sobre el objeto solo se va a poder sumar 1 por cada componente en pantalla*/
-
-            if(localCounter < 1){
-
-                caja.objetosEnCaja++;
-                caja.puntaje+= (Math.random() * 500);
-            }
-
-            localCounter++;
-        }
-        else{
-
-            objetoEnCaja(false);
-        }
+        objetoEnCaja(getBounds().intersects(caja.getBounds()));
 
     }
 
