@@ -78,6 +78,7 @@ public class Objeto extends JLabel implements MouseListener, MouseMotionListener
 
     }
     public void reset() {
+        setVisible(true);
         posX = (int) (Math.random() * 1200);
         posY = (int) (Math.random() * 400);
         localCounter = 0;
