@@ -20,9 +20,9 @@ public final class Enemigos extends Objeto{
     }
     @Override
     public void paintComponent(Graphics graphics){
+        super.paintComponent(graphics);
 
         if (dificultad) {
-            super.paintComponent(graphics);
             graphics.setColor(Color.white);
             graphics.drawString(String.valueOf(valor), 55, getHeight() - 20);
         }
